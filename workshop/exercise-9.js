@@ -18,6 +18,11 @@ const people = [
 
 function avgAge(peopleArr) {
   // return something
+  let sum = 0;
+  peopleArr.forEach(person => {
+    sum += person.age;
+  });
+  return sum/peopleArr.length;
 }
 
 console.log(`Average age is ${avgAge(people)}.`);
@@ -32,6 +37,10 @@ console.log(`Average age is ${avgAge(people)}.`);
 
 function fullName(peopleArr) {
   // return something
+  return peopleArr.map(person => {
+    if (person.name.middle === undefined) return `${person.name.first} ${person.name.last}`;
+    return `${person.name.first} ${person.name.middle} ${person.name.last}`;
+  });
 }
 
 console.log(fullName(people));
@@ -45,6 +54,9 @@ console.log(fullName(people));
 
 function olderPeople(peopleArr, age) {
   // return something
+  return peopleArr.filter(object => {
+    return object.age > 26;
+  });
 }
 
 console.log(olderPeople(people, 26));

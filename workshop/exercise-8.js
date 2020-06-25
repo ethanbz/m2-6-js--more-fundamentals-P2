@@ -48,3 +48,12 @@ const staffMembers = [
     },
   },
 ];
+
+
+const filter = (arr) => {
+  return arr.map(obj => {
+    if (obj.skillLevels.javascript >= 6) return obj;
+  });
+}
+
+console.log(filter(staffMembers));

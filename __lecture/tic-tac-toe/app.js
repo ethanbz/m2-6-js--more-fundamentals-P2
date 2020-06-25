@@ -20,26 +20,48 @@ let currentPlayer = '1';
 player1.classList.add('active');
 
 const handleRestart = () => {
-  // reload the page
-  // feels like cheating but it WILL reset the game
+  //location.reload(true);
 };
 
 const toggleRestartBtn = () => {
-  // enable the restart btn
+  restartBtn.removeAttribute('disabled');
+  //restartBtn.addEventListener('click', handleRestart());
 };
 
 const win = () => {
-  // stop board from being clickable
-  // print the winner to the screen
-  // activate the restart btn
+  endMessageDiv.innerText = `Player ${currentPlayer} wins!!`;
+  board.removeEventListener('click', handleClick);
+  toggleRestartBtn();
+
 };
 
 const verifyWin = () => {
-  // Use the game array to determine the winner.
+  let conditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [2, 4, 6],
+    [0, 4, 8]
+  ];
+
+  for (i = 0; i < 8; i++) {
+    let condition = conditions[i];
+    let pos1 = game[condition[0]];
+    let pos2 = game[condition[1]];
+    let pos3 = game[condition[2]];
+    console.log(pos1+pos2+pos3);
+
+    if (pos1 === pos2 && pos2 === pos3) return true; 
+  }
+  return false;
 };
 
 const togglePlayer = () => {
-  // use .active to show active player visually...
+  player1.classList.toggle('active');
+  player2.classList.toggle('active');
 };
 
 const handleClick = (event) => {
@@ -50,8 +72,19 @@ const handleClick = (event) => {
 
   if (typeof game[cellId] === 'number') {
     currentCellDiv.innerText = icon;
-
-    // so much missing here...
+    game[cellId] = icon;
+    COUNTER++;
+    if (verifyWin() === true) {
+      win();
+    } else if (COUNTER > 8) {
+      endMessageDiv.innerText = `Draw`;
+      board.removeEventListener('click', handleClick);
+      toggleRestartBtn();
+    } else {
+      currentPlayer = currentPlayer === '1' ? '2' : '1';
+      togglePlayer();
+    }
+    
   }
 };
 
