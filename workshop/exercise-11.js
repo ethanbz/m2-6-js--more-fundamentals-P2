@@ -55,6 +55,22 @@ const favouriteDessertsGroupB = {
 
 function sortDessertsByPopularity(dessertObject) {
   // Write code
+  let desserts = Object.values(dessertObject);
+  let sort = [];
+  desserts.forEach(dessert => {
+    let count = 0;
+    for (i=0; i<desserts.length; i++) {
+      if (dessert === desserts[i]) count++;
+      
+    }
+    if (!(sort.includes(`${count}${dessert} (${count})`))) {
+      sort.push(`${count}${dessert} (${count})`)
+    }
+  });
+  sort.sort().reverse();
+  return sort.map(dessert => {
+    return dessert.slice(1)
+  });
 }
 
 console.log(
@@ -95,6 +111,20 @@ console.log(
 
 function groupPeopleByDessert(dessertObject) {
   // do something
+  let desserts = Object.values(dessertObject);
+  let names = Object.keys(dessertObject);
+  let newObj = {};
+  desserts.forEach(dessert => {
+    let nameArr = [];
+    for (i=0; i<desserts.length; i++) {
+      if (dessert === desserts[i]) nameArr.push(names[i]);
+      
+    }
+    if (!(Object.keys(newObj).includes(dessert))) {
+      newObj[`${dessert}`] = nameArr;
+    }
+  });
+  return newObj;
 }
 
 console.log(
